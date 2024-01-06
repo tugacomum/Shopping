@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="100dp">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@mipmap/logo"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="50dp"/>
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:layout_below="@id/imageViewLogo"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"/>
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:layout_below="@id/editTextUsername"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="30dp"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_below="@id/editTextPassword"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"/>
+
+    <TextView
+        android:id="@+id/textViewRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account? Register here."
+        android:layout_below="@id/buttonLogin"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center"/>
+
+</RelativeLayout>
