@@ -2,50 +2,80 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="100dp">
-
+    android:background="#3A61EA"
+    android:paddingTop="30dp">
     <ImageView
         android:id="@+id/imageViewLogo"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:src="@mipmap/logo"
-        android:paddingBottom="50dp"
+        android:src="@drawable/logo_1"
         android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registar"
+        android:textColor="#FFF"
+        android:textSize="22sp"
+        android:layout_below="@id/imageViewLogo"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="30dp"/>
 
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name"
+        android:hint="Username"
         android:layout_below="@id/imageViewLogo"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="30dp"/>
+        android:layout_marginTop="90dp"
+        android:layout_marginHorizontal="30dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="10dp"
+        android:paddingTop="30dp"
+        android:textColor="#000"
+        android:textSize="16dp"
+        android:lines="1"
+        android:textColorHint="#000"
+        />
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="16dp"
         android:hint="Email"
         android:layout_below="@id/editTextUsername"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="30dp"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="10dp"
+        android:lines="1"
+        android:textColorHint="#000"
+        android:textColor="#000"/>
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="16dp"
         android:hint="Password"
         android:layout_below="@id/editTextEmail"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginHorizontal="30dp"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:background="@drawable/edit_text_background"
+        android:padding="10dp"
+        android:lines="1"
+        android:textColorHint="#000"
+        android:textColor="#000"/>
 
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Registar"
+        android:backgroundTint="@color/button_background_color"
         android:layout_below="@id/editTextPassword"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="30dp"/>
@@ -54,11 +84,20 @@
         android:id="@+id/textViewLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Already have an account? Login here."
+        android:text="Já tens conta? Inicia sessão aqui."
         android:layout_below="@id/buttonRegister"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="30dp"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="#FFF"
         android:gravity="center"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="121dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="bottom|center_horizontal"
+        android:paddingBottom="0dp"
+        android:src="@drawable/wave"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

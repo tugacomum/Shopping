@@ -26,7 +26,13 @@
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
-
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/user1" />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/contentLayout"
@@ -90,30 +96,15 @@
                 android:elevation="5dp"
                 android:orientation="vertical"
                 android:padding="20dp" />
-            <LinearLayout
-                android:layout_width="320dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/card_border2"
-                android:elevation="5dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Modo Offline. Será mostrado o histórico dos últimos 30 dias!"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold|italic"
-                    android:gravity="center"/>
-            </LinearLayout>
+
             <Button
                 android:id="@+id/buttonStartPurchase"
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:backgroundTint="@color/button_background_color"
                 android:text="Iniciar Compra"
                 android:textColor="@android:color/white"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="100dp"
                 android:textSize="16sp"
                 android:gravity="center"
                 android:radius="8dp"/>

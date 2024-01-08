@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Carrinho"
+            android:text="Compra Na1"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -78,52 +78,17 @@
                 android:elevation="5dp"
                 android:orientation="vertical"
                 android:padding="20dp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
                 <Button
                     android:id="@+id/buttonPause"
-                    android:layout_width="50dp"
+                    android:layout_width="160dp"
                     android:layout_height="45dp"
-                    android:layout_weight="1"
                     android:backgroundTint="@color/button_background_color"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
-                    android:layout_marginTop="85dp"
+                    android:layout_marginTop="101dp"
                     android:gravity="center"
-                    android:drawableLeft="@drawable/ic_pause"
+                    android:text="Ok"
                     />
-
-
-                <Button
-                    android:id="@+id/buttonScan"
-                    android:layout_width="112dp"
-                    android:layout_height="45dp"
-                    android:layout_weight="2"
-                    android:text="Scan"
-                    android:layout_marginTop="85dp"
-                    android:layout_marginLeft="20dp"
-                    android:backgroundTint="@color/button_background_color"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:radius="8dp"/>
-                <Button
-                    android:id="@+id/buttonFinish"
-                    android:layout_width="114dp"
-                    android:layout_height="45dp"
-                    android:layout_weight="3"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="85dp"
-                    android:text="Finalizar"
-                    android:backgroundTint="@color/button_background_color"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:radius="8dp"/>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <ImageView
