@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="#3A61EA"
+    android:fitsSystemWindows="true"
     android:paddingTop="30dp">
+
     <ImageView
         android:id="@+id/imageViewLogo"
         android:layout_width="180dp"
         android:layout_height="180dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/logo_1"
         android:layout_centerHorizontal="true"/>
     <TextView
@@ -70,11 +73,10 @@
         android:textColor="#FFF"
         android:gravity="center"/>
     <ImageView
+        android:id="@+id/waveImage"
         android:layout_width="match_parent"
-        android:layout_height="121dp"
-        android:layout_marginBottom="0dp"
-        android:gravity="bottom|center_horizontal"
-        android:paddingBottom="0dp"
-        android:src="@drawable/wave"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-5dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/wave" />
 </RelativeLayout>
