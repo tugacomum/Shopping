@@ -80,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         progressDialog.dismiss();
-                        Log.d("LoginResponse", response.toString());
-                        saveUserToPreferences(response);
+                            saveUserToPreferences(response);
                             String userName = response.optString("name", "N/A");
                             Log.d("UserName", userName);
                             if (response != null) {

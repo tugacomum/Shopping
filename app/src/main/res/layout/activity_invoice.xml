@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:text="Confirmar"
+            android:text="Fatura"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -35,21 +35,21 @@
         android:orientation="vertical"
         android:padding="20dp"
         android:layout_marginBottom="50dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="5dp"
-        android:gravity="center_vertical">
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text=""
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="5dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="465dp">
@@ -92,7 +92,7 @@
         android:layout_above="@id/waveImage"
         android:textStyle="bold" />
     <Button
-        android:id="@+id/buttonFinishBuyy"
+        android:id="@+id/buttonFinishBuyyyy"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginHorizontal="20dp"
@@ -102,5 +102,5 @@
         android:layout_alignParentBottom="true"
         android:textSize="16sp"
         android:gravity="center"
-        android:text="Confirmar Compra" />
+        android:text="Ok" />
 </RelativeLayout>

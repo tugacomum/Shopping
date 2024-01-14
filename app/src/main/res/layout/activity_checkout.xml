@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background">
+    <RelativeLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/round_outline"
+            android:clipToOutline="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/microsoftteams_image_1"/>
+    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/blueSquare"
+            android:layout_width="match_parent"
+            android:layout_height="370dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="70dp"
+            android:layout_below="@+id/headerLayout"
+            android:background="@drawable/card_border_qrcode">
+
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="Checkout"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+            <ImageView
+                android:id="@+id/qrCodeImageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/qrcode" />
+            <TextView
+                android:id="@+id/textBelowQRCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/qrCodeImageView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="26dp"
+                android:text="15:00 minutos"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </RelativeLayout>
+        <ImageView
+        android:id="@+id/waveImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-5dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/wave" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="150dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:layout_above="@id/waveImage">
+        <Button
+            android:id="@+id/buttonCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:text="Fechar"
+            android:backgroundTint="@color/button_background_color"
+            android:layout_below="@id/blueSquare"
+            android:layout_marginHorizontal="30dp"/>
+    </LinearLayout>
+</RelativeLayout>

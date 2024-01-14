@@ -28,13 +28,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/settingss"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/user1" />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/contentLayoutt"
@@ -59,20 +52,31 @@
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
             <ImageView
                 android:id="@+id/buttonScan"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:src="@drawable/plus"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end" />
         </LinearLayout>
+        <TextView
+            android:id="@+id/textViewEmptyCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="150dp"
+            android:textAlignment="center"
+            android:text="Adicione algum produto clicando em (+)"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="visible" />
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="450dp">
+            android:layout_height="465dp">
             <LinearLayout
                 android:id="@+id/productsContainer"
                 android:layout_width="match_parent"
@@ -99,6 +103,19 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         android:layout_above="@id/waveImage" />
+    <TextView
+        android:id="@+id/textViewTotalPriceFinishBuyyy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total: 0€"
+        android:textColor="@android:color/black"
+        android:layout_alignParentBottom="true"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginBottom="25dp"
+        android:textSize="18sp"
+        android:layout_above="@id/waveImage"
+        android:textStyle="bold" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

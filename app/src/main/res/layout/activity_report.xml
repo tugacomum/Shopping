@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:text="Confirmar"
+            android:text="Ticket"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -30,7 +30,7 @@
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="420dp"
         android:layout_below="@id/headerLayout"
         android:orientation="vertical"
         android:padding="20dp"
@@ -45,22 +45,45 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=""
+            android:text="Escreva o seu problema"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/addimage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/plus"
+            android:layout_gravity="end" />
     </LinearLayout>
-        <ScrollView
+        <EditText
+            android:id="@+id/editTextMessage"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="465dp">
-            <LinearLayout
-                android:id="@+id/productsContainerFinishBuy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-            </LinearLayout>
-        </ScrollView>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/card_border"
+            android:gravity="top"
+            android:hint="Digite sua mensagem"
+            android:inputType="textMultiLine"
+            android:maxLines="14"
+            android:padding="10dp"
+            android:textColor="@android:color/black" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="20dp"
+            android:text="Fotos"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:id="@+id/imageContainer"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"/>
     </LinearLayout>
     <ImageView
         android:id="@+id/waveImage"
@@ -73,26 +96,15 @@
         android:id="@+id/imageViewBackArrow"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/back"
-        android:layout_marginBottom="-5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:layout_above="@id/waveImage" />
-    <TextView
-        android:id="@+id/textViewTotalPriceFinishBuy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total: 100€"
-        android:textColor="@android:color/black"
-        android:layout_alignParentBottom="true"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:layout_marginBottom="25dp"
-        android:textSize="18sp"
         android:layout_above="@id/waveImage"
-        android:textStyle="bold" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/back" />
     <Button
-        android:id="@+id/buttonFinishBuyy"
+        android:id="@+id/buttonReport"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginHorizontal="20dp"
@@ -102,5 +114,5 @@
         android:layout_alignParentBottom="true"
         android:textSize="16sp"
         android:gravity="center"
-        android:text="Confirmar Compra" />
+        android:text="Reportar" />
 </RelativeLayout>

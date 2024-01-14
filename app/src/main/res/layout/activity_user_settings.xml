@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:textSize="16dp"
         android:hint="Email"
+        android:editable="false"
         android:layout_below="@id/editTextUsernamee"
         android:layout_marginHorizontal="30dp"
         android:inputType="textEmailAddress"

@@ -49,56 +49,42 @@
             android:gravity="center"
             android:text="Histórico de Compras"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:paddingTop="20dp">
+            android:layout_marginTop="150dp"
+            style="@style/ProgressBarStyle"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/textViewNoResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="150dp"
+            android:textAlignment="center"
+            android:text="Sem resultados disponíveis...\n\nRealize alguma compra para aparecer aqui!"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="gone" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="480dp">
             <LinearLayout
+                android:id="@+id/productsContainer"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/card_border"
-                android:elevation="5dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/card_border"
-                android:elevation="5dp"
-                android:orientation="vertical"
-                android:padding="20dp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/card_border"
-                android:elevation="5dp"
-                android:orientation="vertical"
-                android:padding="20dp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/card_border"
-                android:elevation="5dp"
-                android:orientation="vertical"
-                android:padding="20dp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/card_border"
-                android:elevation="5dp"
-                android:orientation="vertical"
-                android:padding="20dp" />
-        </LinearLayout>
+                android:gravity="center">
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
     <Button
         android:id="@+id/buttonStartPurchase"

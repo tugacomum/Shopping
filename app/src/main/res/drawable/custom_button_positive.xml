@@ -1,0 +1,5 @@
+<!-- res/drawable/custom_button_positive.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="8dp" />
+    <solid android:color="#000000" /> <!-- Cor de fundo preta -->
+</shape>

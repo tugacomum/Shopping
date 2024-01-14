@@ -79,34 +79,38 @@ public class UserSettings extends AppCompatActivity {
         });
 
         button.setOnClickListener(v -> {
-            MediaManager.get().upload(imagePath).callback(new UploadCallback() {
-                @Override
-                public void onStart(String requestId) {
-                    Log.d(TAG, "onStart: " + "started");
-                }
+            if (imagePath != null && !imagePath.toString().isEmpty()) {
+                MediaManager.get().upload(imagePath).callback(new UploadCallback() {
+                    @Override
+                    public void onStart(String requestId) {
+                        Log.d(TAG, "onStart: " + "started");
+                    }
 
-                @Override
-                public void onProgress(String requestId, long bytes, long totalBytes) {
-                    Log.d(TAG, "onStart: " + "uploading");
-                }
+                    @Override
+                    public void onProgress(String requestId, long bytes, long totalBytes) {
+                        Log.d(TAG, "onStart: " + "uploading");
+                    }
 
-                @Override
-                public void onSuccess(String requestId, Map resultData) {
-                    Log.d(TAG, "onStart: " + "success");
-                    String url = resultData.get("url").toString();
-                    imageUrl = url;
-                }
+                    @Override
+                    public void onSuccess(String requestId, Map resultData) {
+                        Log.d(TAG, "onStart: " + "success");
+                        String url = resultData.get("url").toString();
+                        imageUrl = url;
+                    }
 
-                @Override
-                public void onError(String requestId, ErrorInfo error) {
-                    Log.d(TAG, "onStart: " + error);
-                }
+                    @Override
+                    public void onError(String requestId, ErrorInfo error) {
+                        Log.d(TAG, "onStart: " + error);
+                    }
 
-                @Override
-                public void onReschedule(String requestId, ErrorInfo error) {
-                    Log.d(TAG, "onStart: " + error);
-                }
-            }).dispatch();
+                    @Override
+                    public void onReschedule(String requestId, ErrorInfo error) {
+                        Log.d(TAG, "onStart: " + error);
+                    }
+                }).dispatch();
+            } else {
+
+            }
         });
 
         findViewById(R.id.imageViewBackArrow).setOnClickListener(new View.OnClickListener() {

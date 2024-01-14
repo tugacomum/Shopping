@@ -5,8 +5,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,6 +19,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shopping"
         tools:targetApi="31">
+        <activity
+            android:name=".Report"
+            android:exported="false" />
+        <activity
+            android:name=".Invoice"
+            android:exported="false" />
+        <activity
+            android:name=".CheckoutWithoutPay"
+            android:exported="false" />
+        <activity
+            android:name=".Checkout"
+            android:exported="false" />
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            tools:replace="android:screenOrientation" />
         <activity
             android:name=".UserSettings"
             android:exported="false" />
@@ -35,7 +54,6 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +61,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="CLOUDINARY_URL" android:value="cloudinary://586245818114969:k3N3bRy7-sdbMUcrsgiMgWxdULU@dnechwjbm" />
+
+        <meta-data
+            android:name="CLOUDINARY_URL"
+            android:value="cloudinary://586245818114969:k3N3bRy7-sdbMUcrsgiMgWxdULU@dnechwjbm" />
     </application>
 
 </manifest>

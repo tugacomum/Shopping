@@ -6,4 +6,11 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
     <style name="Theme.Shopping" parent="Base.Theme.Shopping" />
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent">#FF0000</item>
+        <item name="android:backgroundTint">#FFFFFF</item>
+    </style>
+    <style name="ProgressBarStyle" parent="android:Widget.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/progress_bar_white</item>
+    </style>
 </resources>

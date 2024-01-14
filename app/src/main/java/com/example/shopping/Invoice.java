@@ -1,15 +1,11 @@
 package com.example.shopping;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,18 +27,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinishBuy extends AppCompatActivity {
+public class Invoice extends AppCompatActivity {
+
     private List<Product> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finish_buy);
+        setContentView(R.layout.activity_invoice);
 
-        Button finishBuyButton = findViewById(R.id.buttonFinishBuyy);
-        Intent intent = getIntent();
-        String cartId = intent.getStringExtra("_id");
-        getUserCart(cartId);
+        String cartId = getIntent().getStringExtra("_id");
 
         findViewById(R.id.imageViewBackArrow).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,38 +45,15 @@ public class FinishBuy extends AppCompatActivity {
             }
         });
 
-        finishBuyButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.buttonFinishBuyyyy).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showConfirmationDialog(cartId);
-            }
-        });
-    }
-
-    private void showConfirmationDialog(final String cartId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmar Compra");
-        builder.setMessage("Tem certeza de que deseja levar os produtos para o checkout?");
-
-        builder.setPositiveButton("Checkout", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(FinishBuy.this, Checkout.class);
-                intent.putExtra("_id", cartId);
-                startActivity(intent);
-                Toast.makeText(FinishBuy.this, "Compra confirmada com sucesso!", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        // Realize o pedido para obter os detalhes do carrinho e exibir os produtos na fatura
+        getUserCart(cartId);
     }
 
     private void displayProductCards(List<Product> products) {
@@ -142,7 +113,7 @@ public class FinishBuy extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley Error", "Error during API request", error);
                         error.printStackTrace();
-                        Toast.makeText(FinishBuy.this, "Erro ao obter detalhes do carrinho", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Invoice.this, "Erro ao obter detalhes do carrinho", Toast.LENGTH_SHORT).show();
                     }
                 });
 
