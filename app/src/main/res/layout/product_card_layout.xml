@@ -63,6 +63,7 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:textAlignment="center"
             android:gravity="center"
+            android:enabled="false"
             android:text="1"
             android:inputType="number"
             android:textSize="14sp" />

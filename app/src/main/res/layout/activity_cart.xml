@@ -135,8 +135,6 @@
             android:textSize="16sp"
             android:gravity="center"
             android:radius="8dp"/>
-
-
         <Button
             android:id="@+id/buttonFinish"
             android:layout_width="114dp"

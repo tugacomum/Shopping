@@ -20,13 +20,16 @@
         android:theme="@style/Theme.Shopping"
         tools:targetApi="31">
         <activity
+            android:name=".ReportResponse"
+            android:exported="false" />
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".Report"
             android:exported="false" />
         <activity
             android:name=".Invoice"
-            android:exported="false" />
-        <activity
-            android:name=".CheckoutWithoutPay"
             android:exported="false" />
         <activity
             android:name=".Checkout"
@@ -51,7 +54,8 @@
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

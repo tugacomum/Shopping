@@ -23,7 +23,7 @@
         android:paddingTop="20dp"/>
 
     <EditText
-        android:id="@+id/editTextUsernamee"
+        android:id="@+id/editTextUsernameee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nome"
@@ -39,13 +39,13 @@
         android:textColorHint="#000"/>
 
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/editTextEmaill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16dp"
         android:hint="Email"
-        android:editable="false"
-        android:layout_below="@id/editTextUsernamee"
+        android:enabled="false"
+        android:layout_below="@id/editTextUsernameee"
         android:layout_marginHorizontal="30dp"
         android:inputType="textEmailAddress"
         android:layout_marginTop="15dp"
@@ -55,58 +55,17 @@
         android:textColorHint="#000"
         android:textColor="#000"/>
 
-    <TextView
-        android:id="@+id/textViewPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Alterar Password"
-        android:textColor="#FFF"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="30dp"
-        android:textSize="16sp"
-        android:layout_below="@id/editTextEmail" />
-
-    <EditText
-        android:id="@+id/editTextPasswordd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:hint="Password"
-        android:layout_below="@id/textViewPassword"
-        android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="30dp"
-        android:inputType="textPassword"
-        android:background="@drawable/edit_text_background"
-        android:padding="10dp"
-        android:lines="1"
-        android:textColorHint="#000"
-        android:textColor="#000"/>
-
-    <EditText
-        android:id="@+id/editTextPassworddd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:hint="Repetir Password"
-        android:layout_below="@id/editTextPasswordd"
-        android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="30dp"
-        android:inputType="textPassword"
-        android:background="@drawable/edit_text_background"
-        android:padding="10dp"
-        android:lines="1"
-        android:textColorHint="#000"
-        android:textColor="#000"/>
-
     <Button
-        android:id="@+id/buttonChange"
+        android:id="@+id/buttonChangee"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Alterar"
+        android:layout_height="45dp"
+        android:layout_marginHorizontal="20dp"
         android:backgroundTint="@color/button_background_color"
-        android:layout_below="@id/editTextPassworddd"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="30dp"/>
+        android:text="Alterar"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="150dp"
+        android:layout_alignParentBottom="true"
+        android:textSize="16sp"/>
 
     <ImageView
         android:id="@+id/waveImage"

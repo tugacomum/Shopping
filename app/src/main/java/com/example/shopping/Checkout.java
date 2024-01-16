@@ -57,8 +57,6 @@ public class Checkout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (storedCartId != null && !storedCartId.isEmpty()) {
-                    //startActivity(new Intent(Checkout.this, HomeActivity.class));
-                    //Toast.makeText(Checkout.this, "Compra suspensa com sucesso!", Toast.LENGTH_SHORT).show();
                     finishAffinity();
                 } else {
                     finishBuy();
@@ -130,7 +128,6 @@ public class Checkout extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        //Toast.makeText(Checkout.this, "Erro ao obter detalhes do carrinho", Toast.LENGTH_SHORT).show();
                     }
                 });
 

@@ -127,7 +127,6 @@ public class CartActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley Error", "Error during API request", error);
                         error.printStackTrace();
-                        //Toast.makeText(CartActivity.this, "Erro ao obter o carrinho do usuário", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -373,7 +372,7 @@ public class CartActivity extends AppCompatActivity {
                 currentQuantity++;
                 editTextQuantity.setText(String.valueOf(currentQuantity));
                 updateProductQuantity(product.getProductId(), currentQuantity);
-                updateTotalPrice(); // Atualize o preço total
+                updateTotalPrice();
             }
         });
     }

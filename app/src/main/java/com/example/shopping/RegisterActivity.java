@@ -81,24 +81,18 @@ public class RegisterActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         Log.d("RegisterResponse", response.toString());
 
-                            // Exemplo: Obtendo informações do usuário registrado
                             String userId = response.optString("_id", "");
                             String userName = response.optString("name", "");
                             String userEmail = response.optString("email", "");
 
-                            // Verifica se o ID do usuário não está vazio
                             if (!userId.isEmpty()) {
-                                // Registro bem-sucedido, você pode adicionar lógica adicional aqui
                                 Toast.makeText(RegisterActivity.this, "Registro bem-sucedido", Toast.LENGTH_SHORT).show();
 
-                                // Exemplo: Mostra informações do usuário
                                 Log.d("UserInfo", "ID: " + userId + ", Name: " + userName + ", Email: " + userEmail);
 
-                                // Redireciona para a MainActivity
                                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                                 finish();
                             } else {
-                                // Registro falhou, exibe uma mensagem de erro
                                 Toast.makeText(RegisterActivity.this, "Falha no registro", Toast.LENGTH_SHORT).show();
                             }
 

@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -41,12 +43,29 @@ public class HomeActivity extends AppCompatActivity {
     private String userId;
     private ProgressBar progressBar;
     Button iniciarCompraButton;
+    private JSONArray originalCarts = new JSONArray();
+    private JSONArray filteredCarts = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         sharedPreferences = getSharedPreferences("userPreferences", MODE_PRIVATE);
+
+        EditText editTextSearchProduct = findViewById(R.id.editTextSearchProduct);
+        Button buttonSearch = findViewById(R.id.buttonSearch);
+
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchText = editTextSearchProduct.getText().toString().trim();
+                if (!TextUtils.isEmpty(searchText)) {
+                    searchProducts(searchText);
+                } else {
+                    loadCartsFromApi();
+                }
+            }
+        });
 
         String userObjectJson = sharedPreferences.getString("userObject", "");
         String storedCartId = sharedPreferences.getString("cartId", "");
@@ -102,6 +121,37 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private void searchProducts(String searchTerm) {
+        filteredCarts = new JSONArray();
+
+        try {
+            LinearLayout productsContainer = findViewById(R.id.productsContainer);
+            productsContainer.removeAllViews();
+
+            for (int i = 0; i < originalCarts.length(); i++) {
+                JSONObject cartObject = originalCarts.getJSONObject(i);
+                JSONArray productsArray = cartObject.getJSONArray("products");
+
+                for (int j = 0; j < productsArray.length(); j++) {
+                    JSONObject productObject = productsArray.getJSONObject(j);
+                    String productName = productObject.optString("productName", "");
+
+                    if (productName.toLowerCase().contains(searchTerm.toLowerCase())) {
+                        filteredCarts.put(cartObject);
+                        break;
+                    }
+                }
+            }
+
+            processApiResponse(filteredCarts);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     private void showAlertDialog(String storedCartId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -257,6 +307,7 @@ public class HomeActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        originalCarts = response;
                         processApiResponse(response);
                     }
                 },
@@ -275,6 +326,7 @@ public class HomeActivity extends AppCompatActivity {
     private void processApiResponse(JSONArray jsonArray) {
         try {
             LinearLayout productsContainer = findViewById(R.id.productsContainer);
+            productsContainer.removeAllViews();
 
             if (jsonArray.length() == 0) {
                 findViewById(R.id.textViewNoResults).setVisibility(View.VISIBLE);
@@ -284,7 +336,6 @@ public class HomeActivity extends AppCompatActivity {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject cartObject = jsonArray.getJSONObject(i);
 
-                    // Verificar se o carrinho foi pago (isPaid é true)
                     boolean isPaid = cartObject.optBoolean("isPaid", false);
 
                     if (isPaid) {

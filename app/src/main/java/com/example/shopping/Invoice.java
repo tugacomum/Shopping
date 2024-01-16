@@ -52,7 +52,6 @@ public class Invoice extends AppCompatActivity {
             }
         });
 
-        // Realize o pedido para obter os detalhes do carrinho e exibir os produtos na fatura
         getUserCart(cartId);
     }
 

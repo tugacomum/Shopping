@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isUserLoggedIn() {
-        return sharedPreferences.contains("userObject");
+        return false;//sharedPreferences.contains("userObject");
     }
     private ProgressDialog progressDialog;
     private void performLoginRequest(final String email, final String password) {
@@ -82,10 +82,16 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                             saveUserToPreferences(response);
                             String userName = response.optString("name", "N/A");
-                            Log.d("UserName", userName);
+                            boolean isAdmin = response.optBoolean("isAdmin", false);
+
                             if (response != null) {
-                                startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                                finish();
+                                if (isAdmin) {
+                                    startActivity(new Intent(MainActivity.this, AdminActivity.class));
+                                    Toast.makeText(MainActivity.this, "Bem vindo, " + userName, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                                    Toast.makeText(MainActivity.this, "Bem vindo, " + userName, Toast.LENGTH_SHORT).show();
+                                }
                             } else {
                                 Toast.makeText(MainActivity.this, "Credenciais incorretas", Toast.LENGTH_SHORT).show();
                             }
