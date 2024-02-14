@@ -1,88 +1,404 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/gradient_background"
-    android:paddingTop="50dp">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageViewLogoo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/user123"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Definições"
-        android:textColor="#FFF"
-        android:textSize="22sp"
-        android:layout_below="@id/imageViewLogoo"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="20dp"/>
-
-    <EditText
-        android:id="@+id/editTextUsernameee"
+    tools:context=".UserSettings">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nome"
-        android:layout_below="@id/imageViewLogoo"
-        android:layout_marginTop="90dp"
-        android:layout_marginHorizontal="30dp"
-        android:background="@drawable/edit_text_background"
-        android:padding="10dp"
-        android:paddingTop="30dp"
-        android:textColor="#000"
-        android:textSize="16dp"
-        android:lines="1"
-        android:textColorHint="#000"/>
-
-    <EditText
-        android:id="@+id/editTextEmaill"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageViewBackArrow"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/back"
+            android:padding="14dp"
+            app:tint="@color/white" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Configurações"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:hint="Email"
-        android:enabled="false"
-        android:layout_below="@id/editTextUsernameee"
-        android:layout_marginHorizontal="30dp"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/edit_text_background"
-        android:padding="10dp"
-        android:lines="1"
-        android:textColorHint="#000"
-        android:textColor="#000"/>
-
-    <Button
-        android:id="@+id/buttonChangee"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginHorizontal="20dp"
-        android:backgroundTint="@color/button_background_color"
-        android:text="Alterar"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="150dp"
-        android:layout_alignParentBottom="true"
-        android:textSize="16sp"/>
-
-    <ImageView
-        android:id="@+id/waveImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-5dp"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/wave" />
-
-    <ImageView
-        android:id="@+id/imageViewBackArrow"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/back"
-        android:layout_marginBottom="-5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:layout_above="@id/waveImage" />
-
-</RelativeLayout>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageViewLogooo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile_icon"
+            android:onClick="onProfileImageClick"/>
+            <TextView
+                android:id="@+id/userNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Bruno Piloto"
+                android:textColor="@color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/emailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="internetsoundseasy@gmail.com"
+                android:textColor="#CCFFFFFF"
+                android:textSize="12dp"/>
+            <Button
+                android:id="@+id/editProfileButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:paddingStart="30dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/button_background_color"
+                android:text="Editar Perfil"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:paddingEnd="30dp" />
+            <LinearLayout
+                android:background="@drawable/round_black_white10_20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical"
+                android:padding="15dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/nightModeIcon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:tint="@color/white"
+                        android:src="@drawable/night_mode"
+                        android:background="@drawable/round_black_night_mode"
+                        android:padding="12dp" />
+                    <TextView
+                        android:layout_marginStart="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Modo Escuro"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_toEndOf="@+id/nightModeIcon" />
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:switchMinWidth="50dp"
+                        android:theme="@style/nightModeSwitch"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/notificationIcon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:tint="@color/white"
+                        android:src="@drawable/notification_icon"
+                        android:background="@drawable/round_black_notifications"
+                        android:padding="12dp" />
+                    <TextView
+                        android:layout_marginStart="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Notificações"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_toEndOf="@+id/notificationIcon" />
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:switchMinWidth="50dp"
+                        android:theme="@style/notificationsSwitch"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/privateAccountIcon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:tint="@color/white"
+                        android:src="@drawable/privacy_icon"
+                        android:background="@drawable/round_black_private_account"
+                        android:padding="12dp" />
+                    <TextView
+                        android:layout_marginStart="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Conta Privada"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_toEndOf="@+id/privateAccountIcon" />
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:switchMinWidth="50dp"
+                        android:theme="@style/privateAccountSwitch"/>
+                </RelativeLayout>
+            </LinearLayout>
+        <LinearLayout
+            android:background="@drawable/round_black_white10_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="15dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/securityIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/security_icon"
+                    android:background="@drawable/round_black_security"
+                    android:padding="12dp" />
+                <TextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Segurança &amp; Privacidade"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/securityIcon" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    app:tint="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/textSizeIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/text_size_icon"
+                    android:background="@drawable/round_black_night_mode"
+                    android:padding="12dp" />
+                <TextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Tamanho do Texto"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/textSizeIcon" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    app:tint="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/languageIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/language_icon"
+                    android:background="@drawable/round_black_notifications"
+                    android:padding="12dp" />
+                <TextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Linguagens"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/languageIcon" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    app:tint="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:background="@drawable/round_black_white10_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="15dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/messageIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/message_icon"
+                    android:background="@drawable/round_black_private_account"
+                    android:padding="12dp" />
+                <TextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Envia-nos uma mensagem"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/messageIcon" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    app:tint="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/ticketsLayout"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/aboutUsIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/aboutus_icon"
+                    android:background="@drawable/round_black_security"
+                    android:padding="12dp" />
+                <TextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Tickets"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/aboutUsIcon" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    app:tint="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/faqIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/faqs_icon"
+                    android:background="@drawable/round_black_night_mode"
+                    android:padding="12dp" />
+                <TextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="FAQs"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/faqIcon" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    app:tint="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/round_black_white10_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="15dp">
+            <RelativeLayout
+                android:id="@+id/logOutLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/logOutIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/logout_icon"
+                    android:background="@drawable/round_black_security"
+                    android:padding="12dp" />
+                <TextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Terminar Sessão"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/logOutIcon" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/right_arrow_icon"
+                    app:tint="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+        </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

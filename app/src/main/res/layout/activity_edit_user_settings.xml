@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    tools:context=".UserSettings">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageViewBackArrow"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/back"
+            android:padding="14dp"
+            app:tint="@color/white" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar Perfil"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/profileIcon"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewLogoo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profile_icon" />
+
+            <ImageView
+                android:id="@+id/cameraIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignEnd="@+id/imageViewLogoo"
+                android:layout_alignBottom="@+id/imageViewLogoo"
+                android:src="@drawable/ic_camera" />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/userNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Bruno Piloto"
+                android:textColor="@color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/userEmailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="internetsoundseasy@gmail.com"
+                android:textColor="#CCFFFFFF"
+                android:textSize="12dp"/>
+            <Button
+                android:id="@+id/editProfileButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:paddingStart="30dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/button_background_color"
+                android:text="Salvar alterações"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:paddingEnd="30dp" />
+            <LinearLayout
+                android:background="@drawable/round_black_white10_20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical"
+                android:padding="10dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/editText1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nome"
+                        android:textColorHint="@color/white"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/white"
+                        android:padding="10dp"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

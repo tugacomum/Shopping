@@ -87,11 +87,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                             if (!userId.isEmpty()) {
                                 Toast.makeText(RegisterActivity.this, "Registro bem-sucedido", Toast.LENGTH_SHORT).show();
-
-                                Log.d("UserInfo", "ID: " + userId + ", Name: " + userName + ", Email: " + userEmail);
-
-                                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                                finish();
+                                OTPVerificationDialog otpVerificationDialog = new OTPVerificationDialog(RegisterActivity.this, email);
+                                otpVerificationDialog.setCancelable(false);
+                                otpVerificationDialog.show();
                             } else {
                                 Toast.makeText(RegisterActivity.this, "Falha no registro", Toast.LENGTH_SHORT).show();
                             }

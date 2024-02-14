@@ -98,12 +98,14 @@ public class FinishBuy extends AppCompatActivity {
     private void configureCardView(View cardView, Product product) {
         ImageView imageViewProduct = cardView.findViewById(R.id.imageViewProduct);
         TextView textViewProductName = cardView.findViewById(R.id.textViewProductName);
+        ImageView imageViewReport = cardView.findViewById(R.id.buttonReportProduct);
         TextView textViewProductPrice = cardView.findViewById(R.id.textViewProductPrice);
         EditText editTextQuantity = cardView.findViewById(R.id.editTextQuantity);
         ImageView imageViewMinus = cardView.findViewById(R.id.buttonDecrease);
         ImageView imageViewPlus = cardView.findViewById(R.id.buttonIncrease);
         ImageView imageViewDelete = cardView.findViewById(R.id.buttonDeleteee);
 
+        imageViewReport.setVisibility(View.GONE);
         imageViewMinus.setVisibility(View.GONE);
         imageViewPlus.setVisibility(View.GONE);
         imageViewDelete.setVisibility(View.GONE);

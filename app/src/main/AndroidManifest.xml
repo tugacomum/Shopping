@@ -20,6 +20,29 @@
         android:theme="@style/Theme.Shopping"
         tools:targetApi="31">
         <activity
+            android:name=".UserTickets"
+            android:exported="false" />
+        <activity
+            android:name=".Tickets"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.shopping.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".FullScreenImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditUserSettings"
+            android:exported="false" />
+        <activity
             android:name=".ReportResponse"
             android:exported="false" />
         <activity
@@ -55,7 +78,7 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

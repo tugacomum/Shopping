@@ -37,6 +37,7 @@ public class ReportResponse extends AppCompatActivity {
         Intent intent = getIntent();
         String cartId = intent.getStringExtra("cartId");
         String userId = intent.getStringExtra("userId");
+        String productId = intent.getStringExtra("productId");
         String ticketId = intent.getStringExtra("_id");
 
         editTextMessage = findViewById(R.id.editTextMessageee);
@@ -57,13 +58,14 @@ public class ReportResponse extends AppCompatActivity {
             }
         });
 
-        getUserTicket(cartId, userId);
+        getUserTicket(cartId, userId, productId);
     }
-    private void getUserTicket(String cartId, String userId) {
+    private void getUserTicket(String cartId, String userId, String productId) {
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("userId", userId);
             requestBody.put("cartId", cartId);
+            requestBody.put("productId", productId);
         } catch (JSONException e) {
             e.printStackTrace();
         }

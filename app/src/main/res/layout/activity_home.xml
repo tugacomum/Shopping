@@ -37,11 +37,28 @@
             android:src="@drawable/user1" />
     </RelativeLayout>
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerLayout"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textViewTickets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="tickets" />
+        <Button
+            android:id="@+id/buttonStartPurchase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="compras" />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerLayout"
         android:orientation="vertical"
+        android:visibility="gone"
         android:padding="20dp">
         <TextView
             android:layout_width="match_parent"
@@ -128,7 +145,8 @@
         android:layout_alignParentBottom="true"
         android:textSize="16sp"
         android:gravity="center"
-        android:text="Iniciar Compra" />
+        android:text="Iniciar Compra"
+        android:visibility="gone"/>
     <ImageView
         android:id="@+id/waveImage"
         android:layout_width="match_parent"

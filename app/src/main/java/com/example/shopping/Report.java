@@ -9,16 +9,20 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,7 +37,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,16 +63,42 @@ public class Report extends AppCompatActivity {
 
     private LinearLayout imageContainer;
     private List<ImageView> selectedImages;
+    private static boolean isCloudinaryInitialized = false;
     private EditText editTextMessage;
+
+    private JSONArray imageUrlsArray = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
-        String cartId = getIntent().getStringExtra("_id");
+        selectedImages = new ArrayList<>();
+        imageContainer = findViewById(R.id.imageContainer);
+
+        updateAddPhotoTextVisibility();
+
+        final TextView textViewCharacterCount = findViewById(R.id.textViewCharacterCount);
+
+        String cartId = getIntent().getStringExtra("cartId");
+        String productId = getIntent().getStringExtra("productId");
 
         editTextMessage = findViewById(R.id.editTextMessage);
+        editTextMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                int remainingCharacters = 200 - editable.length();
+                textViewCharacterCount.setText(remainingCharacters + " / 200");
+            }
+        });
 
         findViewById(R.id.imageViewBackArrow).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,84 +119,63 @@ public class Report extends AppCompatActivity {
         imageContainer = findViewById(R.id.imageContainer);
         selectedImages = new ArrayList<>();
 
-        Button buttonReport = findViewById(R.id.buttonReport);
+        Button buttonReport = findViewById(R.id.buttonReportt);
         buttonReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendReportToServer(cartId);
+                sendReportToServer(cartId, productId);
                 findViewById(R.id.addimage).setVisibility(View.GONE);
-                findViewById(R.id.buttonReport).setVisibility(View.GONE);
             }
         });
 
-        getUserTicket(cartId);
+        getUserTicket(cartId, productId);
     }
 
-    private void getUserTicket(String cartId) {
+    private void getUserTicket(String cartId, String productId) {
         SharedPreferences sharedPreferences = getSharedPreferences("userPreferences", MODE_PRIVATE);
         String userObjectJson = sharedPreferences.getString("userObject", "");
 
-        JSONObject requestBody = new JSONObject();
         try {
             JSONObject userObject = new JSONObject(userObjectJson);
             String userId = userObject.optString("_id", "");
-            requestBody.put("userId", userId);
-            requestBody.put("cartId", cartId);
+
+            if (!userId.isEmpty()) {
+                JSONObject requestBody = new JSONObject();
+                requestBody.put("userId", userId);
+                requestBody.put("cartId", cartId);
+                requestBody.put("productId", productId);
+
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                String apiUrl = "https://shopping-f0qb.onrender.com/api/tickets/getuserticket";
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                        Request.Method.POST,
+                        apiUrl,
+                        requestBody,
+                        response -> {
+                            try {
+                                if (response.has("description")) {
+                                    editTextMessage.setText(response.getString("description"));
+                                }
+                                if (response.has("imageUrls") && response.getJSONArray("imageUrls").length() > 0) {
+                                    JSONArray imageUrlsArray = response.getJSONArray("imageUrls");
+                                    loadAndDisplayImages(imageUrlsArray);
+                                    findViewById(R.id.addimage).setVisibility(View.GONE);
+                                    findViewById(R.id.textViewNoImage).setVisibility(View.GONE);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        },
+                        error -> {
+                            Log.e("getUserTicket", "Error: " + error.toString());
+                        });
+
+                requestQueue.add(jsonObjectRequest);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        String apiUrl = "https://shopping-f0qb.onrender.com/api/tickets/getuserticket";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST,
-                apiUrl,
-                requestBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if (response.length() > 0) {
-                            processTicketDetailsResponse(response);
-                        } else return;
-                    }
-                },
-                new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
-
-        requestQueue.add(jsonObjectRequest);
-    }
-
-    private void processTicketDetailsResponse(JSONObject response) {
-            String description = response.optString("description", "");
-            editTextMessage.setText(description);
-
-            JSONArray imageUrlsArray = response.optJSONArray("imageUrls");
-            if (imageUrlsArray != null) {
-                loadAndDisplayImages(imageUrlsArray);
-
-                findViewById(R.id.addimage).setVisibility(View.GONE);
-                editTextMessage.setEnabled(false);
-
-                Button button = findViewById(R.id.buttonReport);
-                button.setText("Ver resposta");
-
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!response.optString("response", "").isEmpty() && response.optString("response", "") != "null") {
-                            showAlert("Resposta suporte", response.optString("response", ""));
-                        } else {
-                            showAlert("Resposta suporte", "Ainda não há resposta do suporte.");
-                        }
-                    }
-                });
-
-                findViewById(R.id.textViewNoImage).setVisibility(View.GONE);
-            }
     }
 
     private void loadAndDisplayImages(JSONArray imageUrlsArray) {
@@ -182,22 +194,19 @@ public class Report extends AppCompatActivity {
     private void loadAndDisplayImage(String imageUrl) {
         String httpsImageUrl = updateToHttps(imageUrl);
 
-        int targetSize = getResources().getDimensionPixelSize(R.dimen.image_size);
-
         ImageView imageView = new ImageView(this);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(targetSize, targetSize));
+        int imageSize = getResources().getDimensionPixelSize(R.dimen.image_size);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(imageSize, imageSize);
+        layoutParams.setMargins(0, 0, getResources().getDimensionPixelSize(R.dimen.image_margin), 0);
+
+        imageView.setLayoutParams(layoutParams);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         Picasso.get().load(httpsImageUrl).into(imageView);
 
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-        if (imageContainer.getChildCount() >= 1) {
-            layoutParams.setMargins(45, 0, 0, 0);
-        } else {
-            layoutParams.setMargins(0, 0, 0, 0);
-        }
-
         imageContainer.addView(imageView);
     }
+
 
     private String updateToHttps(String imageUrl) {
         return imageUrl.replace("http://", "https://");
@@ -209,57 +218,49 @@ public class Report extends AppCompatActivity {
     }
 
     private void initCloudinary() {
-        Map config = new HashMap();
-        config.put("cloud_name", "dnechwjbm");
-        config.put("api_key", "586245818114969");
-        config.put("api_secret", "k3N3bRy7-sdbMUcrsgiMgWxdULU");
-        MediaManager.init(this, config);
+        if (!isCloudinaryInitialized) {
+            Map config = new HashMap();
+            config.put("cloud_name", "dnechwjbm");
+            config.put("api_key", "586245818114969");
+            config.put("api_secret", "k3N3bRy7-sdbMUcrsgiMgWxdULU");
+            MediaManager.init(this, config);
+            isCloudinaryInitialized = true;
+        }
     }
 
-    private void uploadImagesToCloudinary(final CloudinaryUploadCallback callback) {
-        final JSONArray imageUrlsArray = new JSONArray();
-        final int[] imagesUploaded = {0};
 
-        for (ImageView imageView : selectedImages) {
-            Uri imageUri = getImageUri(imageView);
+    private void uploadImageToCloudinary(Uri imageUri) {
+        initCloudinary();
+        MediaManager.get().upload(imageUri).option("folder", "app_images")
+                .callback(new UploadCallback() {
+                    @Override
+                    public void onStart(String requestId) {}
 
-            MediaManager.get().upload(imageUri).callback(new UploadCallback() {
-                @Override
-                public void onStart(String requestId) {
-                }
+                    @Override
+                    public void onProgress(String requestId, long bytes, long totalBytes) {}
 
-                @Override
-                public void onProgress(String requestId, long bytes, long totalBytes) {
-                }
-
-                @Override
-                public void onSuccess(String requestId, Map resultData) {
-                    String imageUrl = resultData.get("url").toString();
-                    try {
-                        JSONObject imageUrlObject = new JSONObject();
-                        imageUrlObject.put("image", imageUrl);
-                        imageUrlsArray.put(imageUrlObject);
-
-                        imagesUploaded[0]++;
-                        if (imagesUploaded[0] == selectedImages.size()) {
-                            callback.onSuccess(imageUrlsArray);
+                    @Override
+                    public void onSuccess(String requestId, Map resultData) {
+                        String imageUrl = resultData.get("url").toString();
+                        Log.d("Upload Success", imageUrl);
+                        try {
+                            JSONObject imageUrlObject = new JSONObject();
+                            imageUrlObject.put("image", imageUrl);
+                            imageUrlsArray.put(imageUrlObject);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
 
-                @Override
-                public void onError(String requestId, ErrorInfo error) {
-                    callback.onError(error);
-                }
+                    @Override
+                    public void onError(String requestId, ErrorInfo error) {
+                        Log.e("Upload Error", error.getDescription());
+                    }
 
-                @Override
-                public void onReschedule(String requestId, ErrorInfo error) {
-                    callback.onError(error);
-                }
-            }).dispatch();
-        }
+                    @Override
+                    public void onReschedule(String requestId, ErrorInfo error) {}
+                })
+                .dispatch();
     }
 
 
@@ -271,15 +272,32 @@ public class Report extends AppCompatActivity {
     private Uri getImageUri(ImageView imageView) {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
         Bitmap bitmap = bitmapDrawable.getBitmap();
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
-        return Uri.parse(path);
+        File imageFile = saveImageLocally(bitmap, "image");
+        if (imageFile != null) {
+            return FileProvider.getUriForFile(Report.this, getApplicationContext().getPackageName() + ".provider", imageFile);
+        }
+        return null;
     }
 
-    private void sendReportToServer(String cartId) {
+
+    private File saveImageLocally(Bitmap bitmap, String imageName) {
+        File imagesFolder = new File(getFilesDir(), "images");
+        if (!imagesFolder.exists()) {
+            imagesFolder.mkdirs();
+        }
+        File imageFile = new File(imagesFolder, imageName + ".png");
+        try (FileOutputStream out = new FileOutputStream(imageFile)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            return imageFile;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void sendReportToServer(String cartId, String productId) {
         SharedPreferences sharedPreferences = getSharedPreferences("userPreferences", MODE_PRIVATE);
         String userObjectJson = sharedPreferences.getString("userObject", "");
-
-        initCloudinary();
 
         JSONObject requestBody = new JSONObject();
         try {
@@ -288,27 +306,15 @@ public class Report extends AppCompatActivity {
             requestBody.put("userId", userId);
             requestBody.put("description", editTextMessage.getText().toString());
             requestBody.put("cartId", cartId);
+            requestBody.put("productId", productId);
+            requestBody.put("imageUrls", imageUrlsArray);
 
-            uploadImagesToCloudinary(new CloudinaryUploadCallback() {
-                @Override
-                public void onSuccess(JSONArray imageUrls) {
-                    try {
-                        requestBody.put("imageUrls", imageUrls);
-                        sendReportToServerWithImages(requestBody);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onError(ErrorInfo error) {
-                    showAlert("Ticket", "Obrigado por reportar o problema. Entraremos em contato em breve.");
-                }
-            });
+            sendReportToServerWithImages(requestBody);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
 
     private void sendReportToServerWithImages(JSONObject requestBody) {
         String apiUrl = "https://shopping-f0qb.onrender.com/api/tickets/createticket";
@@ -321,34 +327,20 @@ public class Report extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        showAlert("Ticket", "Obrigado por reportar o problema. Entraremos em contato em breve.");
+                        startActivity(new Intent(Report.this, HomeActivity.class));
+                        Toast.makeText(Report.this, "Obrigado por reportar o problema.", Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        showAlert("Ticket", "Obrigado por reportar o problema. Entraremos em contato em breve.");
-                        error.printStackTrace();
+
+                        startActivity(new Intent(Report.this, HomeActivity.class));
+                        Toast.makeText(Report.this, "Obrigado por reportar o problema.", Toast.LENGTH_SHORT).show();
                     }
                 });
 
         requestQueue.add(jsonObjectRequest);
-    }
-
-    private void showAlert(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Report.this);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                editTextMessage.setEnabled(false);
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 
     @Override
@@ -356,37 +348,45 @@ public class Report extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            Uri imageUri = data.getData();
 
-                int targetSize = getResources().getDimensionPixelSize(R.dimen.image_size);
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, targetSize, targetSize, false);
+            if (imageUri != null) {
+                uploadImageToCloudinary(imageUri); // Faz o upload da imagem para o Cloudinary
 
+                // Cria e configura a ImageView
                 ImageView imageView = new ImageView(this);
-                imageView.setLayoutParams(new LinearLayout.LayoutParams(targetSize, targetSize));
-                imageView.setImageBitmap(resizedBitmap);
+                int imageSize = getResources().getDimensionPixelSize(R.dimen.image_size); // Supondo que você tenha essa dimensão definida
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(imageSize, imageSize);
+                int margin = getResources().getDimensionPixelSize(R.dimen.image_margin); // Supondo que você tenha essa margem definida
+                layoutParams.setMargins(0, 0, margin, 0); // Define a margem direita
+                imageView.setLayoutParams(layoutParams);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-                if (imageContainer.getChildCount() >= 1) {
-                    layoutParams.setMargins(45, 0, 0, 0);
-                } else {
-                    layoutParams.setMargins(0, 0, 0, 0);
-                }
+                // Usa Picasso para carregar a imagem selecionada na ImageView
+                Picasso.get().load(imageUri).into(imageView);
 
+                // Adiciona a ImageView ao container na UI
                 imageContainer.addView(imageView);
+                selectedImages.add(imageView); // Adiciona a ImageView à lista de imagens selecionadas
 
-                imageView.setBackgroundResource(R.drawable.images_rounded);
-                selectedImages.add(imageView);
-
-                findViewById(R.id.textViewNoImage).setVisibility(View.GONE);
-
-                if (selectedImages.size() == MAX_IMAGES) {
-                    findViewById(R.id.addimage).setVisibility(View.GONE);
+                // Verifica se o limite de imagens foi alcançado
+                if (selectedImages.size() >= MAX_IMAGES) {
+                    findViewById(R.id.addimage).setVisibility(View.GONE); // Esconde o botão para adicionar mais imagens
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+
+                // Atualiza a visibilidade do texto de orientação para adicionar imagens
+                updateAddPhotoTextVisibility();
             }
+        }
+    }
+
+
+    private void updateAddPhotoTextVisibility() {
+        TextView textViewNoImage = findViewById(R.id.textViewNoImage);
+        if (selectedImages != null && !selectedImages.isEmpty()) {
+            textViewNoImage.setVisibility(View.GONE);
+        } else {
+            textViewNoImage.setVisibility(View.VISIBLE);
         }
     }
 

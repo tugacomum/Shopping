@@ -67,6 +67,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.textViewTickets).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, Tickets.class);
+                startActivity(intent);
+            }
+        });
+
         String userObjectJson = sharedPreferences.getString("userObject", "");
         String storedCartId = sharedPreferences.getString("cartId", "");
 
@@ -356,7 +364,6 @@ public class HomeActivity extends AppCompatActivity {
                         textViewTotalPrice.setText(String.format("%.2f€", totalCartPrice));
 
                         ImageView buttonViewCart = cardView.findViewById(R.id.buttonViewCart);
-                        ImageView buttonReport = cardView.findViewById(R.id.buttonReport);
 
                         cardView.setTag(cartObject.optString("_id", ""));
 
@@ -364,15 +371,6 @@ public class HomeActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(HomeActivity.this, Invoice.class);
-                                intent.putExtra("_id", cartObject.optString("_id", ""));
-                                startActivity(intent);
-                            }
-                        });
-
-                        buttonReport.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(HomeActivity.this, Report.class);
                                 intent.putExtra("_id", cartObject.optString("_id", ""));
                                 startActivity(intent);
                             }

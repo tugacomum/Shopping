@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -42,43 +43,38 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserSettings extends AppCompatActivity {
-
-    private static final int REQUEST_PERMISSION_CODE = 123;
-    private CircleImageView circleImageView;
     private SharedPreferences sharedPreferences;
-    private String imageUrl;
     private String image;
-    private String _id;
-    private EditText editTextName;
-
+    private CircleImageView circleImageView;
+    private TextView email;
+    private TextView editTextName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
 
-        editTextName = findViewById(R.id.editTextUsernameee);
-        EditText editTextEmail = findViewById(R.id.editTextEmaill);
-        circleImageView = findViewById(R.id.imageViewLogoo);
-
         sharedPreferences = getSharedPreferences("userPreferences", MODE_PRIVATE);
         String userObjectJson = sharedPreferences.getString("userObject", "");
+        editTextName = findViewById(R.id.userNameTextView);
+        circleImageView = findViewById(R.id.imageViewLogooo);
+        email = findViewById(R.id.emailText);
 
         try {
             JSONObject userObject = new JSONObject(userObjectJson);
             editTextName.setText(userObject.optString("name", "N/A"));
-            editTextEmail.setText(userObject.optString("email", "N/A"));
-            _id = userObject.optString("_id", "N/A");
+            email.setText(userObject.optString("email", "N/A"));
             image = replaceToHttps(userObject.optString("imageUrl", "N/A"));
             Picasso.get().load(image).into(circleImageView);
         } catch (
-            JSONException e) {
+                JSONException e) {
             e.printStackTrace();
         }
 
-        circleImageView.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.editProfileButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkPermissionAndOpenGallery();
+                Intent intent = new Intent(UserSettings.this, EditUserSettings.class);
+                startActivity(intent);
             }
         });
 
@@ -89,141 +85,33 @@ public class UserSettings extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.buttonChangee).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ticketsLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateUserProfile(_id, imageUrl);
+                Intent intent = new Intent(UserSettings.this, UserTickets.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.logOutLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.remove("userObject");
+                editor.apply();
+                Intent intent = new Intent(UserSettings.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
         });
     }
-
-    private void updateUserProfile(String _id, String imageUrl) {
-        String apiUrl = "https://shopping-f0qb.onrender.com/api/users/edituser";
-        JSONObject requestBody = new JSONObject();
-        try {
-            requestBody.put("_id", _id);
-            requestBody.put("name", editTextName.getText().toString());
-            requestBody.put("imageUrl", imageUrl);
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.PATCH,
-                    apiUrl,
-                    requestBody,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Toast.makeText(UserSettings.this, "Perfil atualizado com sucesso", Toast.LENGTH_SHORT).show();
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                            Toast.makeText(UserSettings.this, "Erro a atualizar o perfil", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-            requestQueue.add(jsonObjectRequest);
-
-            sharedPreferences = getSharedPreferences("userPreferences", MODE_PRIVATE);
-            String userObjectJson = sharedPreferences.getString("userObject", "");
-
-            try {
-                JSONObject userObject = new JSONObject(userObjectJson);
-                userObject.put("name", editTextName.getText().toString());
-                userObject.put("imageUrl", imageUrl);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("userObject", userObject.toString());
-                editor.apply();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     private String replaceToHttps(String image) {
         return image.replace("http://", "https://");
     }
-
-    private void checkPermissionAndOpenGallery() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_PERMISSION_CODE);
-        } else {
-            openGallery();
-        }
-    }
-
-    private void openGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        galleryActivityResultLauncher.launch(galleryIntent);
-    }
-
-    private final ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    Intent data = result.getData();
-                    if (data != null) {
-                        Uri selectedImageUri = data.getData();
-                        if (selectedImageUri != null) {
-                            try {
-                                Picasso.get().load(selectedImageUri).into(circleImageView);
-                                uploadImageToCloudinary(selectedImageUri);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            });
-
-    private void uploadImageToCloudinary(Uri imageUri) {
-            initCloudinary();
-            MediaManager.get().upload(imageUri)
-                    .callback(new UploadCallback() {
-                        @Override
-                        public void onStart(String requestId) {
-                        }
-
-                        @Override
-                        public void onProgress(String requestId, long bytes, long totalBytes) {
-                        }
-
-                        @Override
-                        public void onSuccess(String requestId, Map resultData) {
-                            imageUrl = resultData.get("url").toString();
-                        }
-
-                        @Override
-                        public void onError(String requestId, ErrorInfo error) {
-                        }
-
-                        @Override
-                        public void onReschedule(String requestId, ErrorInfo error) {
-                        }
-                    })
-                    .dispatch();
-    }
-
-    private void initCloudinary() {
-        Map config = new HashMap();
-        config.put("cloud_name", "dnechwjbm");
-        config.put("api_key", "586245818114969");
-        config.put("api_secret", "k3N3bRy7-sdbMUcrsgiMgWxdULU");
-        MediaManager.init(this, config);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery();
-            } else {
-                Toast.makeText(this, "Permission denied! Cannot open the gallery.", Toast.LENGTH_SHORT).show();
-            }
-        }
+    public void onProfileImageClick(View view) {
+        Intent intent = new Intent(this, FullScreenImageActivity.class);
+        intent.putExtra("image_url", image);
+        startActivity(intent);
     }
 }

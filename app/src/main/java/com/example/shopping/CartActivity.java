@@ -293,6 +293,8 @@ public class CartActivity extends AppCompatActivity {
 
             if (cardView != null) {
                 EditText editTextQuantity = cardView.findViewById(R.id.editTextQuantity);
+                ImageView imageViewReport = cardView.findViewById(R.id.buttonReportProduct);
+                imageViewReport.setVisibility(View.GONE);
                 int currentQuantity = existingProduct.getQuantity();
                 currentQuantity++;
                 existingProduct.setQuantity(currentQuantity);
@@ -334,6 +336,8 @@ public class CartActivity extends AppCompatActivity {
         EditText editTextQuantity = cardView.findViewById(R.id.editTextQuantity);
         ImageView buttonIncrease = cardView.findViewById(R.id.buttonIncrease);
         ImageView buttonDelete = cardView.findViewById(R.id.buttonDeleteee);
+        ImageView imageViewReport = cardView.findViewById(R.id.buttonReportProduct);
+        imageViewReport.setVisibility(View.GONE);
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override

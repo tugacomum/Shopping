@@ -93,9 +93,7 @@ public class AdminActivity extends AppCompatActivity {
                             textViewBuyInfo.setText(buyInfo);
 
                             ImageView buttonViewCart = cardView.findViewById(R.id.buttonViewCart);
-                            ImageView buttonReport = cardView.findViewById(R.id.buttonReport);
 
-                            buttonReport.setVisibility(View.GONE);
                             buttonViewCart.setVisibility(View.GONE);
 
                             cardView.setTag(cartObject.optString("_id", ""));
@@ -106,6 +104,7 @@ public class AdminActivity extends AppCompatActivity {
                                     Intent intent = new Intent(AdminActivity.this, ReportResponse.class);
                                     intent.putExtra("cartId", cartObject.optString("cartId", ""));
                                     intent.putExtra("userId", cartObject.optString("userId", ""));
+                                    intent.putExtra("productId", cartObject.optString("productId", ""));
                                     intent.putExtra("_id", cartObject.optString("_id", ""));
                                     startActivity(intent);
                                 }

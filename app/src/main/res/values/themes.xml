@@ -13,4 +13,19 @@
     <style name="ProgressBarStyle" parent="android:Widget.ProgressBar">
         <item name="android:indeterminateDrawable">@drawable/progress_bar_white</item>
     </style>
+    <style name="nightModeSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/night_mode</item>
+        <item name="colorSwitchThumbNormal">#FFFFFF</item>
+        <item name="android:colorForeground">#99FFFFFF</item>
+    </style>
+    <style name="notificationsSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/notifications</item>
+        <item name="colorSwitchThumbNormal">#FFFFFF</item>
+        <item name="android:colorForeground">#99FFFFFF</item>
+    </style>
+    <style name="privateAccountSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/private_account</item>
+        <item name="colorSwitchThumbNormal">#FFFFFF</item>
+        <item name="android:colorForeground">#99FFFFFF</item>
+    </style>
 </resources>

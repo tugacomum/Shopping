@@ -1,6 +1,8 @@
 package com.example.shopping;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         sharedPreferences = getSharedPreferences("userPreferences", MODE_PRIVATE);
         if (isUserLoggedIn()) {
             startActivity(new Intent(MainActivity.this, HomeActivity.class));
@@ -58,6 +61,35 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("userObject", userObject.toString());
         editor.apply();
     }
+    private void showVerificationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Conta não verificada");
+        builder.setMessage("Sua conta não está verificada. Deseja verificar agora?");
+
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                showOtpDialog();
+            }
+        });
+
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    private void showOtpDialog() {
+        EditText email = findViewById(R.id.editText123);
+        OTPEmailDialog otpEmailDialog = new OTPEmailDialog(MainActivity.this, email);
+        otpEmailDialog.setCancelable(false);
+        otpEmailDialog.show();
+    }
 
     private boolean isUserLoggedIn() {
         return false;//sharedPreferences.contains("userObject");
@@ -79,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        progressDialog.dismiss();
+                            progressDialog.dismiss();
                             saveUserToPreferences(response);
                             String userName = response.optString("name", "N/A");
                             boolean isAdmin = response.optBoolean("isAdmin", false);
@@ -101,8 +133,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Log.e("LoginError", "Credenciais Incorretas" + error.toString());
-                        Toast.makeText(MainActivity.this, "Credenciais Incorretas", Toast.LENGTH_SHORT).show();
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            String errorMessage = new String(error.networkResponse.data);
+                            Log.d("ErrorMessage", "Error Message: " + errorMessage);
+                            if (errorMessage.equals("{\"message\":\"Account not verified\"}")) {
+                                showVerificationDialog();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Credenciais Incorretas", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
